@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+
 
 @Entity // Class name = User, DB Table name = user
 @Table(name = "users")
@@ -68,7 +71,9 @@ public class User {
 	public void setAccounts(List<Account> accounts) {
 		this.accounts = accounts;
 	}
-	@OneToOne(mappedBy = "user")
+	@OneToOne(mappedBy = "user",
+			  cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},
+			  orphanRemoval = true)
 	public Address getAddress() {
 		return address;
 	}
