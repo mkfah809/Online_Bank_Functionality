@@ -8,11 +8,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.Address;
 import com.coderscampus.assignment13.domain.User;
-import com.coderscampus.assignment13.repository.AccountRepository;
-import com.coderscampus.assignment13.repository.AddressRepository;
+
 import com.coderscampus.assignment13.repository.UserRepository;
 
 @Service
@@ -20,10 +18,6 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepo;
-	@Autowired
-	private AccountRepository accountRepo;
-	@Autowired
-	private AddressRepository addressRepo;
 
 	public List<User> findByUsername(String username) {
 		return userRepo.findByUsername(username);
@@ -56,38 +50,11 @@ public class UserService {
 
 	public User saveUser(User user) {
 		if (user.getUserId() != null) { // MERGE
-			Address address = new Address ();
+			Address address = new Address();
 			address.setUserId(user.getUserId());
 			user.setAddress(address);
 		}
-//		if (user.getUserId() == null) { // PERSIST
-//			
-//			
-//			
-//			Account checking = new Account();
-//			checking.setAccountName("Checking Account");
-//			checking.getUsers().add(user);
-//			
-//			Account savings = new Account();
-//			savings.setAccountName("Savings Account");
-//			savings.getUsers().add(user);
-//			
-//			user.getAccounts().add(checking);
-//			user.getAccounts().add(savings);
-//			
-//			accountRepo.save(checking);
-//			accountRepo.save(savings);
-//	
-//		} else { // MERGE
-//			Address address = new Address ();
-//			
-//			
-//			address.setUser(user);
-//			address.setUserId(user.getUserId());
-//			user.setAddress(address);
-//
-//		}
-//		System.out.println();
+
 		return userRepo.save(user);
 	}
 
