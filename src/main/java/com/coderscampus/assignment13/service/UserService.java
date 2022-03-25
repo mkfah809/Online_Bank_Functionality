@@ -8,9 +8,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.Address;
 import com.coderscampus.assignment13.domain.User;
-
 import com.coderscampus.assignment13.repository.UserRepository;
 
 @Service
@@ -49,13 +49,40 @@ public class UserService {
 	}
 
 	public User saveUser(User user) {
-		if (user.getUserId() != null) { // MERGE
-			Address address = new Address();
-			address.setUserId(user.getUserId());
-			user.setAddress(address);
+		Account account = new Account();
+		Address address = new Address();
+		
+		if (user.getUserId() == null) {
+			System.out.println("User doesn't exist");
+		} else {
+			System.out.println("User exists");
 		}
 
+		if (address.getUserId() == null) {
+			System.out.println("address doesn't exist");
+			setAddressInformation(user, address);
+		} else {
+			System.out.println("user has address");
+		}
+		
+		if(user.getAccounts() != null) {
+			System.out.println("user has accounts");
+		} else {
+			System.out.println("user doesn't have any accounts yet");
+		}
 		return userRepo.save(user);
+	}
+
+	private void setAddressInformation(User user, Address address) {
+		address.setAddressLine1(user.getAddress().getAddressLine1());
+		address.setAddressLine2(user.getAddress().getAddressLine2());
+		address.setCity(user.getAddress().getCity());
+		address.setRegion(user.getAddress().getRegion());
+		address.setCountry(user.getAddress().getCountry());
+		address.setZipCode(user.getAddress().getZipCode());
+		address.setUserId(user.getUserId());
+		address.setUser(user);
+		user.setAddress(address);
 	}
 
 	public void delete(Long userId) {

@@ -49,9 +49,26 @@
 			method="post">
 			<input type="submit" value="Delete User Account" />
 		</form>
+		<hr>
+		<h2>Accounts</h2>
+
+
+		<div th:each="account : ${user.accounts}">
+			<a
+				th:href="@{/users/{userId}/accounts/{accountId}(accountId=${account.accountId},userId=${user.userId})}">[[${account.accountName}]]</a>
+		</div>
+		<br>
+
+		<form th:action="@{/users/{userId}/accounts(userId=${user.userId})}"
+			method="post">
+			<input type="submit" value="Create New Account" />
+		</form>
+	<br>
+		<div>
+			<a href="/users">Back</a>
+		</div>
 	</div>
 
-	<hr>
 
 
 	<div th:unless="${#lists.size(users) == 1}" th:each="user : ${users}">
