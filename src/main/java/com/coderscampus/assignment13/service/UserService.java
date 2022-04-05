@@ -1,7 +1,6 @@
 package com.coderscampus.assignment13.service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -50,37 +49,14 @@ public class UserService {
 	}
 
 	public User saveUser(User user) {
-
-		List<Account> accounts = new ArrayList<>();
-		Account account = new Account();
-
-		if (user.getUserId() == null) {
-			System.out.println("User doesn't exist");
-		} else {
-			System.out.println("User exists");
-
-		}
-
-		if (user.getAddress() == null) {
-			System.out.println("user doesn't have address ");
-		} else {
+		if (user.getUserId() != null) {
 			Address address = new Address();
-			System.out.println("user has address");
+			Account account = new Account();
 			setAddressInformation(user, address);
-		}
-
-		if (user.getAccounts().isEmpty()) {
-			
-				System.out.println("accounts are"+account);
-
-				System.out.println(account.getUsers().add(user));
-				System.out.println(user.getAccounts().add(account));
-		
-
+			account.getUsers().add(user);
+			user.getAccounts().add(account);
 		} else {
-			System.out.println("user has accounts");
 		}
-
 		return userRepo.save(user);
 	}
 
@@ -91,7 +67,6 @@ public class UserService {
 		address.setRegion(user.getAddress().getRegion());
 		address.setCountry(user.getAddress().getCountry());
 		address.setZipCode(user.getAddress().getZipCode());
-
 		address.setUserId(user.getUserId());
 		address.setUser(user);
 		user.setAddress(address);

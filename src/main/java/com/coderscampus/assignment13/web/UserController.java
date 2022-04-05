@@ -20,6 +20,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+
 	@GetMapping("/register")
 	public String getCreateUser(ModelMap model) {
 		model.put("user", new User());
@@ -28,7 +29,6 @@ public class UserController {
 
 	@PostMapping("/register")
 	public String postCreateUser(User user) {
-		System.out.println(user);
 
 		userService.saveUser(user);
 		return "redirect:/register";
@@ -41,7 +41,6 @@ public class UserController {
 		if (users.size() == 1) {
 			model.put("user", users.iterator().next());
 		}
-
 		return "users";
 	}
 
@@ -50,7 +49,6 @@ public class UserController {
 		User user = userService.findById(userId);
 		model.put("users", Arrays.asList(user));
 		model.put("user", user);
-		
 		return "users";
 	}
 
@@ -66,8 +64,5 @@ public class UserController {
 		return "redirect:/users";
 	}
 
-	@GetMapping("/users/{userId}/accounts/{accountId}")
-	public String getOneAccount(@PathVariable Long accountId, @PathVariable Long userId) {
-		return "redirect:/users";
-	}
+
 }
