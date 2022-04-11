@@ -46,6 +46,7 @@
 			<div>
 				<input type="hidden" th:field=${user.accounts} />
 			</div>
+
 		</form>
 
 		<form th:action="@{/users/{userId}/delete(userId=${user.userId})}"
@@ -62,12 +63,12 @@
 			</a>
 		</div>
 		<br>
-
-		<form method="post" action="@{/users/{userId}/accounts(userId=user.userId)}">
-			<input type="submit" value="Create New Account" />
-		</form>
-
-
+		<div>
+			<form th:action="@{/users/{userId}/accounts(userId= ${user.userId})}"
+			method="get">
+			<input type="submit" value="Create New Account"/>
+			</form>
+		</div>
 		<br>
 		<div>
 			<a href="/users">Back</a>
@@ -77,7 +78,7 @@
 
 
 	<div th:unless="${#lists.size(users) == 1}" th:each="user : ${users}">
-	
+
 		<a th:href="@{/users/{userId}(userId=${user.userId})}" target="_new"><span
 			th:text="${user.userId}"></span></a><br /> <span
 			th:text="${user.username}"></span><br /> <span

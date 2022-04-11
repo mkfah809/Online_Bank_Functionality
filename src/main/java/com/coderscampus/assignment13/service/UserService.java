@@ -50,11 +50,7 @@ public class UserService {
 
 	public User saveUser(User user) {
 		if (user.getUserId() != null) {
-			Address address = new Address();
-			Account account = new Account();
-			setAddressInformation(user, address);
-			account.getUsers().add(user);
-			user.getAccounts().add(account);
+			setAddressInformation(user, new Address());
 		} else {
 		}
 		return userRepo.save(user);
