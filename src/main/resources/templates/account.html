@@ -5,21 +5,19 @@
 </head>
 <body>
 	<h1 th:inline="text">[[${account.accountName}]]</h1>
-	<form method="post" action="">
-		Account Name: <input th:field="${account.accountName}" />
+	<form method="post"
+		th:action="@{/users/{userId}/accounts/{accountId}(userId=${user.userId}, 
+		accountId=${account.accountId})}">
+		<div>
+			Account Name: <input th:field="${account.accountName}" />
+		</div>
+		<div>
+			<input type="text" th:field=${account.users} />
+		</div>
 		<div>
 			<input type="submit" value="Save Account" />
 		</div>
-<!-- 		<div> -->
-<!-- 			<input type="hidden" th:field="account.accountId" /> -->
-<!-- 		</div> -->
 	</form>
-
-<!-- 	<form method="post" -->
-<!-- 		th:action="@{/users/{userId}/account/{accountId}/delete(userId=${user.userId}   ,accountId=${account.accountId})}"> -->
-<!-- 		<input type="submit" value="Delete Account" /> -->
-<!-- 	</form> -->
-
 	<hr>
 	<a th:href="@{/users/{userId}(userId=${user.userId})}"> Back</a>
 </body>

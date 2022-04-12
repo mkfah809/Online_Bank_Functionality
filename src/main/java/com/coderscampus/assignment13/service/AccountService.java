@@ -14,14 +14,18 @@ public class AccountService {
 	@Autowired
 	AccountRepository accountRepo;
 
-	public Account saveAccount(Account account) {
-		if (account.getAccountId() != null) {
-			
-		} else {
-			
+	public Account saveAccount(Account account, User user) {
 
-			
-			
+		if (account.getAccountId() != null) {
+
+		} else {
+//			System.out.println("account id is " + account.getAccountId());
+//			account = new Account();
+//			System.out.println("account id after initiaze a new account is " + account.getAccountId());
+//			System.out.println();
+			user.getAccounts().add(account);
+//			account.getUsers().add(user);
+
 		}
 		return accountRepo.save(account);
 	}
