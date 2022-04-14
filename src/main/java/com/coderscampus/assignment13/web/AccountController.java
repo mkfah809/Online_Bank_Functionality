@@ -21,41 +21,34 @@ public class AccountController {
 	@Autowired
 	UserService userService;
 
-	
-
-	//Create new account button
-	@GetMapping("/users/{userId}/accounts")
-	public String getCreateAccount(ModelMap model, Long accountId, @PathVariable Long userId) {
-		model.put("user", userService.findById(userId));
-		model.put("account", accountService.findById(accountId));
-		return "account";
-	}
-	
-	//save button
 	@PostMapping("/users/{userId}/accounts")
 	public String postCreateAccount(@PathVariable Long userId) {
-		System.out.println("user id is" + userId);
 		User user = userService.findById(userId);
-		List<Account> accounts  = user.getAccounts();
-		Long size = (long) (accounts.size()+1);
-		Account account = accountService.saveAccount(size, userId);
+		List<Account> accounts = user.getAccounts();
+		Long size = (long) (accounts.size() + 1);
+		Account account = accountService.createAccount(userId, size);
 		return "redirect:/users/{userId}/accounts/" + account.getAccountId();
 
 	}
-	
+
 	@GetMapping("/users/{userId}/accounts/{accountId}")
 	public String getOneAccount(ModelMap model, @PathVariable Long accountId, @PathVariable Long userId, User user) {
 		model.put("user", userService.findById(userId));
 		model.put("account", accountService.findById(accountId));
 		return "account";
-		
+
 	}
-	
-//   accountName links
+
 	@PostMapping("/users/{userId}/accounts/{accountId}")
-	public String postOneAccount(Long userId, Long size) {
-		accountService.saveAccount(userId,size);
+	public String postOneAccount(@PathVariable Long userId, Long size, Account account) {
+		accountService.saveAccount(account);
 		return "redirect:/users/" + userId;
+	}
+
+	@PostMapping("/users/{userId}/accounts/{accountId}/delete")
+	public String deleteOneAccount(@PathVariable Long accountId) {
+		accountService.delete(accountId);
+		return "redirect:/users/{userId}";
 	}
 
 }

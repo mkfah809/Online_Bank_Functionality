@@ -51,7 +51,7 @@ public class Account {
 	}
 
 
-	@ManyToMany(mappedBy = "accounts", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(mappedBy = "accounts", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	public List<User> getUsers() {
 		return users;
 	}

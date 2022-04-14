@@ -11,12 +11,19 @@
 		<div>
 			Account Name: <input th:field="${account.accountName}" />
 		</div>
-		<div>
-			<input type="text" th:field=${user.accounts} />
-		</div>
+
 		<div>
 			<input type="submit" value="Save Account" />
 		</div>
+		<div>
+			<input type="hidden" th:field=${account.accountId} />
+		</div>
+	</form>
+	<form
+		th:action="@{/users/{userId}/accounts/{accountId}/delete
+		(userId=${user.userId},   accountId=${account.accountId})}"
+		method="post">
+		<input type="submit" value="Delete Bank Account" />
 	</form>
 	<hr>
 	<a th:href="@{/users/{userId}(userId=${user.userId})}"> Back</a>

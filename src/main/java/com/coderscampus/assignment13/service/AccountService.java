@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.User;
@@ -19,21 +21,9 @@ public class AccountService {
 	@Autowired
 	UserRepository userRepo;
 
-	public Account saveAccount(Long size, Long userId) {
-		User user = userRepo.findById(userId).orElse(null);
-		String accountName = "Account# " + size;
-		Account account = new Account();
+	public Account saveAccount(Account account) {
 		if (account.getAccountId() != null) {
-
-		} else {
-			List<User> users = new ArrayList<>();
-			users.add(user);
-			account.setAccountName(accountName);
-			account.setUsers(users);
-			account.getUsers().add(user);
-			user.getAccounts().add(account);
 		}
-
 		return accountRepo.save(account);
 	}
 
@@ -42,8 +32,24 @@ public class AccountService {
 		return accountOpt.orElse(new Account());
 	}
 
-	public void delete(Long userId) {
-		accountRepo.deleteById(userId);
+	public void delete(Long accountId) {
+		accountRepo.deleteById(accountId);
+		System.out.println(accountId + "HAS BEEN DELETED");
+
+	}
+
+	public Account createAccount(Long userId, Long size) {
+		Account account = new Account();
+		setAccountForExistingUser(userId, size, account, new ArrayList<>());
+		return accountRepo.save(account);
+	}
+
+	private void setAccountForExistingUser(Long userId, Long size, Account account, List<User> users) {
+		users.add(userRepo.findById(userId).orElse(null));
+		account.setAccountName("Account#" + size);
+		account.setUsers(users);
+		account.getUsers().add(userRepo.findById(userId).orElse(null));
+		userRepo.findById(userId).orElse(null).getAccounts().add(account);
 	}
 
 }
