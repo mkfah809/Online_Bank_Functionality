@@ -1,5 +1,7 @@
 package com.coderscampus.assignment13.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,25 +10,30 @@ import org.springframework.stereotype.Service;
 import com.coderscampus.assignment13.domain.Account;
 import com.coderscampus.assignment13.domain.User;
 import com.coderscampus.assignment13.repository.AccountRepository;
+import com.coderscampus.assignment13.repository.UserRepository;
 
 @Service
 public class AccountService {
 	@Autowired
 	AccountRepository accountRepo;
+	@Autowired
+	UserRepository userRepo;
 
-	public Account saveAccount(Account account, User user) {
-
+	public Account saveAccount(Long size, Long userId) {
+		User user = userRepo.findById(userId).orElse(null);
+		String accountName = "Account# " + size;
+		Account account = new Account();
 		if (account.getAccountId() != null) {
 
 		} else {
-//			System.out.println("account id is " + account.getAccountId());
-//			account = new Account();
-//			System.out.println("account id after initiaze a new account is " + account.getAccountId());
-//			System.out.println();
+			List<User> users = new ArrayList<>();
+			users.add(user);
+			account.setAccountName(accountName);
+			account.setUsers(users);
+			account.getUsers().add(user);
 			user.getAccounts().add(account);
-//			account.getUsers().add(user);
-
 		}
+
 		return accountRepo.save(account);
 	}
 

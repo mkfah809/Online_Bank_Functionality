@@ -51,6 +51,9 @@ public class UserService {
 	public User saveUser(User user) {
 		if (user.getUserId() != null) {
 			setAddressInformation(user, new Address());
+			Account account = new Account();
+			account.getUsers().add(user);
+			
 		} else {
 			
 		}
