@@ -1,0 +1,6 @@
+enhance the /users endpoint to allow the userId values to be clickable.
+When clicked on, this will send a GET request to the /users/{userId} endpoint. However, the accounts should be clickable too
+On the /users/{userId} screen, you should add the address and account information and make the address information editable / savable. 
+by implementing three different relationships being displayed and managed on one screen.
+When you click on the “Create New Bank Account” button, it should send a post to create a new bank account to the following url: /users/{userId}/accounts.
+Add the /users/{userId}/accounts/{accountId} endpoint to create a new account.html page where you’ll be able to modify the account’s name. Here’s what the screen should look like:
